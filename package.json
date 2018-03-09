@@ -1,0 +1,28 @@
+{
+  "name": "nodemon_of",
+  "version": "1.0.0",
+  "description": "This Node.JS server for OrderFood  configurations orders and push to Dashboard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kuzmrom7/nodemon_of.git"
+  },
+  "author": "OrderFood",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kuzmrom7/nodemon_of/issues"
+  },
+  "homepage": "https://github.com/Kuzmrom7/nodemon_of#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.8",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.1",
+    "socket-io": "^1.0.0"
+  }
+}
