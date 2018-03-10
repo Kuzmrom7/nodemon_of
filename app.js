@@ -7,10 +7,7 @@ const cors = require('cors');
 const logger = require('./logger/logger');
 
 
-
-
-
-//mongoose.connect('mongodb://localhost:27017/orderfood');
+mongoose.connect('mongodb://localhost:27017/orderfood');
 
 /*const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');*/
