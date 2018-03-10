@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
   });
 });
 
-router.get('/:placeid', (req, res, next) => {
+router.get('/:menu_id', (req, res, next) => {
 
   res.status(200).json({
     message: 'Menu by id',
