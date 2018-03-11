@@ -6,8 +6,11 @@ const productSchema = mongoose.Schema({
   id_address: String,
   name_user: String,
   phone : String,
+  menu_id : String,
+  menu_name :String,
   dishes: [{
     id_dish: String,
+    name_dish: String,
     spec_name: String,
     price: Number
   }],

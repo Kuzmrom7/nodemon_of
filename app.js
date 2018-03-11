@@ -11,11 +11,7 @@ mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/orderf
   logger.debug("Database connect!")
 });
 
-const menusRoutes = require('./api/routes/menus');
 const ordersRoutes = require('./api/routes/orders');
-const placesRoutes = require('./api/routes/places');
-const dishesRoutes = require('./api/routes/orders');
-const addressRoutes = require('./api/routes/addresses');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
@@ -24,10 +20,7 @@ app.use(cors({ origin: '*' }));
 
 
 app.use('/order',ordersRoutes);
-app.use('/menu', menusRoutes);
-app.use('/place', placesRoutes);
-app.use('/dish', dishesRoutes);
-app.use('/address', addressRoutes);
+
 
 
 module.exports = app;
