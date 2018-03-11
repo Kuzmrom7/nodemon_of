@@ -7,7 +7,7 @@ const cors = require('cors');
 const logger = require('./logger/logger');
 
 
-mongoose.connect('mongodb://localhost:27017/orderfood', () => {
+mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/orderfood`, () => {
   logger.debug("Database connect!")
 });
 
@@ -17,7 +17,7 @@ const placesRoutes = require('./api/routes/places');
 const dishesRoutes = require('./api/routes/orders');
 const addressRoutes = require('./api/routes/addresses');
 
-app.use(require('morgan')({ "stream": logger.stream }));
+app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cors({ origin: '*' }));
@@ -25,8 +25,8 @@ app.use(cors({ origin: '*' }));
 
 app.use('/order',ordersRoutes);
 app.use('/menu', menusRoutes);
-app.use('/places', placesRoutes);
-app.use('/dishes', dishesRoutes);
+app.use('/place', placesRoutes);
+app.use('/dish', dishesRoutes);
 app.use('/address', addressRoutes);
 
 
