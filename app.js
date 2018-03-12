@@ -5,13 +5,14 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const logger = require('./logger/logger');
+const socketIo = require("socket.io");
 
 
 mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/orderfood`, () => {
   logger.debug("Database connect!")
 });
 
-const ordersRoutes = require('./api/routes/orders');
+const {router} = require('./api/routes/orders');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
@@ -19,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cors({ origin: '*' }));
 
 
-app.use('/order',ordersRoutes);
+app.use('/order',router);
 
 
 
