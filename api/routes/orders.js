@@ -43,13 +43,13 @@ module.exports =  function(io) {
           io.emit(order.id_place, order)
         }
         catch (error) {
-          console.log(error)
+          logger.error("Error", error)
         }
 
       })
       .catch((err) => logger.error("Error", err));
 
   });
-}
+};
 
 module.exports.router = router;
