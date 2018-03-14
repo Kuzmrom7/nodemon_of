@@ -5,8 +5,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const logger = require('./logger/logger');
-const socketIo = require("socket.io");
-
 
 mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/orderfood`, () => {
   logger.debug("Database connect!")
