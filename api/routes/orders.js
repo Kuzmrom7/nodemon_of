@@ -64,6 +64,7 @@ module.exports = function (io) {
       name_user: req.body.name_user,
       phone: req.body.phone,
       dishes: req.body.dishes,
+      status: req.body.status,
       total: req.body.total
     });
 
