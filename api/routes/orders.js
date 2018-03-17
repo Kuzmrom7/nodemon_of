@@ -8,7 +8,6 @@ const Order = require('../models/order');
 
 
 // METHOD GET ORDERS FOR PLACE
-
 router.get('/place/:id_place', (req, res, next) => {
 
   Order.find({id_place: req.params.id_place})
@@ -20,7 +19,6 @@ router.get('/place/:id_place', (req, res, next) => {
 });
 
 // METHOD GET ORDERS FOR ADDRESS
-
 router.get('/address/:id_address', (req, res, next) => {
 
   Order.find({id_address: req.params.id_address})
@@ -31,12 +29,31 @@ router.get('/address/:id_address', (req, res, next) => {
 
 });
 
+router.put('/:order_id', (req, res, next) => {
+
+  const id = req.params.order_id;
+
+  console.log("UPDATE!!!!!",id,req.body);
+
+  Order.update({_id: id}, {$set: {status: req.body.status}})
+
+    .exec()
+
+    .then(result => {
+      res.status(200).json(result);
+    })
+
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    });
+
+});
 
 // METHOD GET ORDERS FOR ORDER_ID
-
 router.get('/:id', (req, res) => {
   const id = req.params.id;
-
   Order.findById(id)
 
     .exec()
@@ -52,7 +69,6 @@ router.get('/:id', (req, res) => {
 
 
 //CREATE ORDER AND CONNECT TO WSS
-
 module.exports = function (io) {
   router.post('/', (req, res, next) => {
 
