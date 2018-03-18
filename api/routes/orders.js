@@ -29,13 +29,11 @@ router.get('/address/:id_address', (req, res, next) => {
 
 });
 
-router.put('/:order_id', (req, res, next) => {
+router.get('/:order_id/success', (req, res, next) => {
 
   const id = req.params.order_id;
 
-  console.log("UPDATE!!!!!",id,req.body);
-
-  Order.update({_id: id}, {$set: {status: req.body.status}})
+  Order.update({_id: id}, {$set: {status: "SUCCESS"}})
 
     .exec()
 
