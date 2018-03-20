@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(cors({ origin: '*' }));
 
 
-app.use('/api', auth);
+app.use('/auth', auth);
 app.use('/order',router);
 
 

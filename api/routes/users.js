@@ -23,8 +23,32 @@ router.post('/register', function(req, res) {
       if (err) {
         return res.json({ success: false, message: 'That email address already exists.'});
       }
-      res.json({ success: true, message: 'Successfully created new user.' });
-    });
+
+      User.findOne({
+        email: req.body.email
+      }, (err, user) => {
+        if (err) throw err;
+        if (!user) {
+          res.send({ success: false, message: 'Authentication failed. User not found.' });
+        } else {
+          // Check if password matches
+          user.comparePassword(req.body.password, (err, isMatch) => {
+            if (isMatch && !err) {
+              // Create token if the password matched and no error was thrown
+              const token = jwt.sign(user.toJSON(), config.secret, {
+                expiresIn: 604800 // 1 week
+              });
+              res.json({ success: true, token: token });
+            } else {
+              res.send({ success: false, message: 'Authentication failed. Passwords did not match.' });
+            }
+          });
+        }
+      });
+
+     // res.json({ success: true, message: 'Successfully created new user.' });
+    })
+
   }
 });
 
@@ -44,7 +68,7 @@ router.post('/authenticate', (req, res) => {
           const token = jwt.sign(user.toJSON(), config.secret, {
             expiresIn: 604800 // 1 week
           });
-          res.json({ success: true, token: 'JWT ' + token });
+          res.json({ success: true, token: token });
         } else {
           res.send({ success: false, message: 'Authentication failed. Passwords did not match.' });
         }
