@@ -18,6 +18,50 @@ router.get('/place/:id_place', (req, res, next) => {
 
 });
 
+// METHOD GET ORDERS FOR USER
+router.get('/user', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+
+  Order.find({id_user: req.user._id})
+    .exec()
+    .then((result) => {
+      res.status(200).json(result)
+    })
+    .catch((err) => {
+      res.status(400).json({err: err})
+    })
+
+});
+
+// METHOD GET ORDERS FOR USER
+router.get('/user/processing', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+
+  Order.find({id_user: req.user._id, status: "PROCESSING"})
+    .exec()
+    .then((result) => {
+      res.status(200).json(result)
+    })
+    .catch((err) => {
+      res.status(400).json({err: err})
+    })
+
+});
+
+// METHOD GET ORDERS FOR ORDER_ID
+router.get('/:id', (req, res) => {
+  const id = req.params.id;
+  Order.findById(id)
+
+    .exec()
+    .then(result => {
+      res.status(200).json(result)
+    })
+    .catch(error => {
+      res.status(400).json({
+        error: error
+      })
+    })
+});
+
 // METHOD GET ORDERS FOR ADDRESS
 router.get('/address/:id_address', (req, res, next) => {
 
@@ -28,6 +72,7 @@ router.get('/address/:id_address', (req, res, next) => {
     });
 
 });
+
 
 router.get('/:order_id/success', (req, res, next) => {
 
@@ -49,22 +94,6 @@ router.get('/:order_id/success', (req, res, next) => {
 
 });
 
-// METHOD GET ORDERS FOR ORDER_ID
-router.get('/:id', (req, res) => {
-  const id = req.params.id;
-  Order.findById(id)
-
-    .exec()
-    .then(result => {
-      res.status(200).json(result)
-    })
-    .catch(error => {
-      res.status(400).json({
-        error: error
-      })
-    })
-});
-
 
 //CREATE ORDER AND CONNECT TO WSS
 module.exports = function (io) {
@@ -74,7 +103,8 @@ module.exports = function (io) {
       date: req.body.date,
       id_place: req.body.id_place,
       id_address: req.body.id_address,
-      name_user: req.body.name_user,
+      name_user: req.user.name,
+      id_user: req.user._id,
       phone: req.body.phone,
       dishes: req.body.dishes,
       status: req.body.status,
