@@ -15,7 +15,9 @@ router.post('/register', function(req, res) {
   } else {
     const newUser = new User({
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      name: req.body.name,
+
     });
 
     // Attempt to save the user
@@ -38,7 +40,7 @@ router.post('/register', function(req, res) {
               const token = jwt.sign(user.toJSON(), config.secret, {
                 expiresIn: 604800 // 1 week
               });
-              res.json({ success: true, token: token });
+              res.json({ token: token, name: user.name });
             } else {
               res.send({ success: false, message: 'Authentication failed. Passwords did not match.' });
             }
@@ -49,6 +51,18 @@ router.post('/register', function(req, res) {
      // res.json({ success: true, message: 'Successfully created new user.' });
     })
 
+  }
+});
+
+router.post('/fetch', (req,res) => {
+  const decoded = jwt.verify(req.body.token, config.secret);
+  if (!decoded) {
+    res.send.statusCode(400)
+  }else {
+    res.json({
+      email: decoded.email,
+      name: decoded.name
+    })
   }
 });
 
