@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const logger = require('../../logger/logger');
-
+const passport = require('passport');
 
 const Order = require('../models/order');
 
@@ -68,8 +68,7 @@ router.get('/:id', (req, res) => {
 
 //CREATE ORDER AND CONNECT TO WSS
 module.exports = function (io) {
-  router.post('/', (req, res, next) => {
-
+  router.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     const order = new Order({
       _id: new mongoose.Types.ObjectId(),
       date: req.body.date,
