@@ -104,7 +104,6 @@ module.exports = function (io) {
       id_place: req.body.id_place,
       id_address: req.body.id_address,
       name_user: req.user.name,
-      id_user: req.user._id,
       phone: req.body.phone,
       dishes: req.body.dishes,
       status: req.body.status,
